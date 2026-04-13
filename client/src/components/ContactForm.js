@@ -54,7 +54,8 @@ const ContactForm = () => {
     });
 
     try {
-      const response = await fetch('/api/contact', {
+      const API_URL = process.env.REACT_APP_API_URL || 'https://new-portfolio-04oq.onrender.com';
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
