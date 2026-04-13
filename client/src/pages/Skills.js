@@ -7,7 +7,6 @@ import {
   Database, 
   Smartphone, 
   Globe, 
-  Cpu,
   GitBranch,
   Zap,
   Shield,

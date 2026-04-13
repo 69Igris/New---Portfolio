@@ -9,8 +9,7 @@ import {
   Mail, 
   Code, 
   Palette, 
-  Database, 
-  Smartphone,
+  Database,
   ExternalLink,
   ArrowRight
 } from 'lucide-react';
