@@ -99,9 +99,26 @@ const Projects = () => {
     // Simulate API call
     const fetchProjects = async () => {
       setLoading(true);
-      // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setProjects(mockProjects);
+      try {
+        const API_URL = process.env.NODE_ENV === 'production' 
+          ? 'https://new-portfolio-04oq.onrender.com' 
+          : 'http://localhost:5001';
+        const response = await fetch(`${API_URL}/api/projects`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            setProjects(data);
+          } else {
+            setProjects(mockProjects);
+          }
+        } else {
+          setProjects(mockProjects);
+        }
+      } catch (error) {
+        console.error('Failed to fetch projects:', error);
+        setProjects(mockProjects);
+      }
       setLoading(false);
     };
 

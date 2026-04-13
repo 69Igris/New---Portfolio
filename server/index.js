@@ -13,7 +13,8 @@ const allowedOrigins = [
   'http://localhost:5000',
   'http://localhost:5001',
   'http://localhost:3000',
-  'http://localhost:3001'
+  'http://localhost:3001',
+  'https://new-portfolio69.vercel.app'
 ];
 
 app.use(cors({
