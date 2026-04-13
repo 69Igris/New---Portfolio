@@ -5,23 +5,28 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
-const allowedOrigins = [process.env.CLIENT_ORIGIN || 'http://localhost:3000'];
+const allowedOrigins = [
+  'https://new-portfolio-04oq.onrender.com',
+  'http://localhost:5000',
+  'http://localhost:5001',
+  'http://localhost:3000',
+  'http://localhost:3001'
+];
+
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // allow server-to-server / curl
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      return callback(null, true);
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(null, true); // fallback: allow during local dev
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: false,
+  credentials: true
 }));
-app.options('*', cors());
 app.use(express.json());
 
 // MongoDB connection
@@ -133,27 +138,31 @@ app.post('/api/contact', async (req, res) => {
 
     // Send email notification (optional)
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER, // Your email
-        subject: `Portfolio Contact: ${subject}`,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Subject:</strong> ${subject}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `
-      };
+      try {
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: process.env.EMAIL_USER, // Your email
+          subject: `Portfolio Contact: ${subject}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Subject:</strong> ${subject}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message}</p>
+          `
+        };
 
-      await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
+      } catch (emailError) {
+        console.error('Failed to send email but message saved:', emailError);
+      }
     }
 
     res.status(200).json({ message: 'Message sent successfully!' });
   } catch (error) {
-    console.error('Error processing contact form:', error);
-    res.status(500).json({ error: 'Failed to send message' });
+    console.error('Error processing contact form (Detailed):', error.message, error.stack);
+    res.status(500).json({ error: 'Failed to send message', details: error.message });
   }
 });
 
