@@ -66,32 +66,36 @@ const Home = () => {
 
   useEffect(() => {
     // Hero section animations
-    gsap.fromTo(heroRef.current?.children,
-      { opacity: 0, y: 50 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 1, 
-        stagger: 0.2, 
-        ease: 'power2.out' 
-      }
-    );
+    if (heroRef.current) {
+      gsap.fromTo(heroRef.current.children,
+        { opacity: 0, y: 50 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 1, 
+          stagger: 0.2, 
+          ease: 'power2.out' 
+        }
+      );
+    }
 
     // Scroll-triggered animations for each section
     ScrollTrigger.create({
       trigger: aboutRef.current,
       start: 'top 80%',
       onEnter: () => {
-        gsap.fromTo(aboutRef.current?.children,
-          { opacity: 0, y: 50 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8, 
-            stagger: 0.1, 
-            ease: 'power2.out' 
-          }
-        );
+        if (aboutRef.current) {
+          gsap.fromTo(aboutRef.current.children,
+            { opacity: 0, y: 50 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 0.8, 
+              stagger: 0.1, 
+              ease: 'power2.out' 
+            }
+          );
+        }
       }
     });
 
@@ -99,17 +103,19 @@ const Home = () => {
       trigger: skillsRef.current,
       start: 'top 80%',
       onEnter: () => {
-        gsap.fromTo(skillsRef.current?.querySelectorAll('.skill-card'),
-          { opacity: 0, y: 50, scale: 0.8 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            scale: 1,
-            duration: 0.6, 
-            stagger: 0.1, 
-            ease: 'back.out(1.7)' 
-          }
-        );
+        if (skillsRef.current) {
+          gsap.fromTo(skillsRef.current.querySelectorAll('.skill-card'),
+            { opacity: 0, y: 50, scale: 0.8 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              duration: 0.6, 
+              stagger: 0.1, 
+              ease: 'back.out(1.7)' 
+            }
+          );
+        }
       }
     });
 
@@ -117,16 +123,18 @@ const Home = () => {
       trigger: projectsRef.current,
       start: 'top 80%',
       onEnter: () => {
-        gsap.fromTo(projectsRef.current?.querySelectorAll('.project-card'),
-          { opacity: 0, y: 50 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8, 
-            stagger: 0.2, 
-            ease: 'power2.out' 
-          }
-        );
+        if (projectsRef.current) {
+          gsap.fromTo(projectsRef.current.querySelectorAll('.project-card'),
+            { opacity: 0, y: 50 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 0.8, 
+              stagger: 0.2, 
+              ease: 'power2.out' 
+            }
+          );
+        }
       }
     });
 
@@ -134,16 +142,18 @@ const Home = () => {
       trigger: contactRef.current,
       start: 'top 80%',
       onEnter: () => {
-        gsap.fromTo(contactRef.current?.children,
-          { opacity: 0, y: 50 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8, 
-            stagger: 0.1, 
-            ease: 'power2.out' 
-          }
-        );
+        if (contactRef.current) {
+          gsap.fromTo(contactRef.current.children,
+            { opacity: 0, y: 50 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 0.8, 
+              stagger: 0.1, 
+              ease: 'power2.out' 
+            }
+          );
+        }
       }
     });
 
