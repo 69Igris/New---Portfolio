@@ -19,20 +19,20 @@ const Contact = () => {
     {
       icon: <Mail />,
       title: 'Email',
-      value: 'your.email@example.com',
-      link: 'mailto:your.email@example.com'
+      value: 'work.with.igris@example.com',
+      link: 'mailto:work.with.igris@example.com'
     },
     {
       icon: <Phone />,
       title: 'Phone',
-      value: '+1 (555) 123-4567',
-      link: 'tel:+15551234567'
+      value: '+91 9034331716',
+      link: 'tel:+919034331716'
     },
     {
       icon: <MapPin />,
       title: 'Location',
-      value: 'San Francisco, CA',
-      link: 'https://maps.google.com'
+      value: 'Sonipat, Haryana, India',
+      link: 'https://www.google.com/maps/place/Sonipat'
     }
   ];
 
@@ -40,19 +40,19 @@ const Contact = () => {
     {
       icon: <Github />,
       name: 'GitHub',
-      url: 'https://github.com/yourusername',
+      url: 'https://github.com/69Igris',
       color: 'hover:text-gray-400'
     },
     {
       icon: <Linkedin />,
       name: 'LinkedIn',
-      url: 'https://linkedin.com/in/yourusername',
+      url: 'https://linkedin.com/in/aaryan-yadav-272b8a315/',
       color: 'hover:text-blue-400'
     },
     {
       icon: <Twitter />,
       name: 'Twitter',
-      url: 'https://twitter.com/yourusername',
+      url: 'https://x.com/Work_with_Igris',
       color: 'hover:text-blue-400'
     }
   ];
