@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { buildApiUrl } from '../lib/api';
+import { fetchApi } from '../lib/api';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +55,7 @@ const ContactForm = () => {
     });
 
     try {
-      const response = await fetch(buildApiUrl('/api/contact'), {
+      const response = await fetchApi('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

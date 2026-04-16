@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import ProjectCard from '../components/ProjectCard';
 import InteractiveGraphic from '../components/InteractiveGraphic';
-import { buildApiUrl } from '../lib/api';
+import { fetchApi } from '../lib/api';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -101,7 +101,7 @@ const Projects = () => {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        const response = await fetch(buildApiUrl('/api/projects'));
+        const response = await fetchApi('/api/projects');
         
         if (response.ok) {
           const data = await response.json();
