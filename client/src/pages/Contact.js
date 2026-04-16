@@ -19,8 +19,8 @@ const Contact = () => {
     {
       icon: <Mail />,
       title: 'Email',
-      value: 'work.with.igris@example.com',
-      link: 'mailto:work.with.igris@example.com'
+      value: 'work.with.igris@gmail.com',
+      link: 'mailto:work.with.igris@gmail.com'
     },
     {
       icon: <Phone />,
