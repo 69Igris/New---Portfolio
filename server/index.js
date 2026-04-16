@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
-const allowedOrigins = [
+const defaultAllowedOrigins = [
   'https://new-portfolio-04oq.onrender.com',
   'http://localhost:5000',
   'http://localhost:5001',
@@ -17,17 +17,50 @@ const allowedOrigins = [
   'https://new-portfolio69.vercel.app'
 ];
 
-app.use(cors({
+const envAllowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [
+  ...defaultAllowedOrigins,
+  ...envAllowedOrigins,
+  process.env.CLIENT_URL
+].filter(Boolean);
+
+const allowedOriginPatterns = [
+  /^http:\/\/localhost:\d+$/,
+  /^https:\/\/(?:[a-zA-Z0-9-]+\.)*vercel\.app$/,
+  /^https:\/\/(?:[a-zA-Z0-9-]+\.)*onrender\.com$/
+];
+
+const isOriginAllowed = (origin) => {
+  if (!origin) {
+    return true;
+  }
+
+  if (allowedOrigins.includes(origin)) {
+    return true;
+  }
+
+  return allowedOriginPatterns.some(pattern => pattern.test(origin));
+};
+
+const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    if (isOriginAllowed(origin)) {
+      return callback(null, true);
     }
+
+    console.warn(`CORS blocked for origin: ${origin}`);
+    return callback(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 // MongoDB connection

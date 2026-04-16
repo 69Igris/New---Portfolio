@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { buildApiUrl } from '../lib/api';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -54,10 +55,7 @@ const ContactForm = () => {
     });
 
     try {
-      const API_URL = process.env.NODE_ENV === 'production' 
-        ? 'https://new-portfolio-04oq.onrender.com' 
-        : 'http://localhost:5001';
-      const response = await fetch(`${API_URL}/api/contact`, {
+      const response = await fetch(buildApiUrl('/api/contact'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +73,8 @@ const ContactForm = () => {
           duration: 0.3
         });
       } else {
-        throw new Error('Failed to send message');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to send message');
       }
     } catch (error) {
       console.error('Error sending message:', error);

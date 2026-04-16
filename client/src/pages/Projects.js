@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import ProjectCard from '../components/ProjectCard';
 import InteractiveGraphic from '../components/InteractiveGraphic';
+import { buildApiUrl } from '../lib/api';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -100,10 +101,7 @@ const Projects = () => {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        const API_URL = process.env.NODE_ENV === 'production' 
-          ? 'https://new-portfolio-04oq.onrender.com' 
-          : 'http://localhost:5001';
-        const response = await fetch(`${API_URL}/api/projects`);
+        const response = await fetch(buildApiUrl('/api/projects'));
         
         if (response.ok) {
           const data = await response.json();
